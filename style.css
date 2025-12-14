@@ -31,26 +31,45 @@ body {
 }
 
 .search-box {
+  position: relative;
   display: flex;
-  gap: 10px;
-  margin-bottom: 40px;
+  gap: 12px;
+  margin-bottom: 50px;
 }
 
 .search-box input {
   flex: 1;
-  padding: 15px;
-  border-radius: 8px;
-  border: none;
-  font-size: 1rem;
+  padding: 16px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 1.1rem;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.search-box input:focus {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+  border-color: #00d4ff;
 }
 
 .search-box button {
-  padding: 15px 25px;
-  border-radius: 8px;
+  padding: 16px 30px;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
   font-weight: bold;
-  background: #00d4ff;
+  font-size: 1rem;
+  color: #000;
+  background: linear-gradient(135deg, #00d4ff, #00ff88);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 255, 200, 0.9);
 }
 
 .trending h2 {
@@ -65,12 +84,76 @@ body {
 
 .trending-list img {
   width: 100%;
-  border-radius: 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.trending-list img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.7);
 }
 
 .result {
-  margin-top: 40px;
+  display: flex;
+  gap: 30px;
+  padding: 35px;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.85),
+    rgba(20, 40, 60, 0.85)
+  );
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.35);
+  animation: fadeInUp 0.6s ease;
 }
+
+.result img {
+  width: 240px;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
+}
+
+.result-details {
+  flex: 1;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result h1 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+}
+
+.result h1 span {
+  opacity: 0.7;
+  font-weight: normal;
+}
+
+.watch-time {
+  font-size: 3.2rem;
+  font-weight: bold;
+  margin: 20px 0;
+  color: #00ffcc;
+  text-shadow: 0 0 25px rgba(0, 255, 200, 0.8);
+}
+
+.ratings {
+  display: flex;
+  gap: 20px;
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
 
 .hidden {
   display: none;

@@ -99,20 +99,25 @@ function displayResult(data) {
   const minutes = data.runtime % 60;
 
   resultDiv.innerHTML = `
-    <h2>${data.title} (${data.year})</h2>
-    <img src="${data.poster}" width="200" />
+    <img src="${data.poster}" alt="${data.title}" />
 
-    <p><b>Type:</b> ${data.type}</p>
-    <p>IMDb ⭐ ${data.imdb}</p>
-    <p>Rotten 🍅 ${data.rt}</p>
+    <div class="result-details">
+      <h1>${data.title} <span>(${data.year})</span></h1>
 
-    ${data.tmdbRating ? `<p>TMDB ⭐ ${data.tmdbRating} / 10</p>` : ""}
+      <div class="watch-time">
+        ⏱ ${hours}h ${minutes}m
+      </div>
 
-    <h3>⏱ Total Watch Time</h3>
-    <p>${hours}h ${minutes}m</p>
+      <div class="ratings">
+        <span>IMDb ⭐ ${data.imdb}</span>
+        <span>Rotten 🍅 ${data.rt}</span>
+        ${data.tmdbRating ? `<span>TMDB ⭐ ${data.tmdbRating}/10</span>` : ""}
+      </div>
+    </div>
   `;
 
   resultDiv.classList.remove("hidden");
+  resultDiv.scrollIntoView({ behavior: "smooth" });
 }
 
 
@@ -123,7 +128,7 @@ async function loadTrending() {
 
   trendingList.innerHTML = "";
 
-  data.results.slice(0, 6).forEach(show => {
+  data.results.slice(0, 10).forEach(show => {
     const img = document.createElement("img");
     img.src = IMG_BASE + show.poster_path;
     img.title = show.name;
