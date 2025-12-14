@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WatchTime AI</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- App Container -->
+  <div class="app">
+
+    <!-- Title -->
+    <h1 class="logo">🎬 WatchTime AI</h1>
+    <p class="tagline">
+      Find how much time you need to finish a movie or TV series
+    </p>
+
+    <!-- Search Bar -->
+    <div class="search-box">
+      <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Search a movie or TV show..."
+      />
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <!-- Trending Section -->
+    <section class="trending">
+      <h2>🔥 Trending in last 3 days</h2>
+      <div id="trendingList" class="trending-list"></div>
+    </section>
+
+    <!-- Result Section -->
+    <section id="result" class="result hidden"></section>
+
+  </div>
+
+  <!-- JS -->
+  <script src="script.js"></script>
+</body>
+</html>
