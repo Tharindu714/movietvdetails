@@ -75,9 +75,10 @@ async function fetchTvDetails(id) {
   const tv = await res.json();
 
   let totalMinutes = 0;
+  const avgRuntime = tv.episode_run_time[0] || 45;
 
   tv.seasons.forEach(season => {
-    totalMinutes += season.episode_count * (tv.episode_run_time[0] || 45);
+    totalMinutes += season.episode_count * avgRuntime;
   });
 
   displayResult({
@@ -86,10 +87,12 @@ async function fetchTvDetails(id) {
     year: tv.first_air_date?.split("-")[0],
     poster: IMG_BASE + tv.poster_path,
     runtime: totalMinutes,
-    imdb: "—",
-    rt: "—"
+    imdb: "N/A",
+    rt: "N/A",
+    tmdbRating: tv.vote_average
   });
 }
+
 
 function displayResult(data) {
   const hours = Math.floor(data.runtime / 60);
@@ -98,15 +101,20 @@ function displayResult(data) {
   resultDiv.innerHTML = `
     <h2>${data.title} (${data.year})</h2>
     <img src="${data.poster}" width="200" />
-    <p>Type: ${data.type}</p>
+
+    <p><b>Type:</b> ${data.type}</p>
     <p>IMDb ⭐ ${data.imdb}</p>
     <p>Rotten 🍅 ${data.rt}</p>
+
+    ${data.tmdbRating ? `<p>TMDB ⭐ ${data.tmdbRating} / 10</p>` : ""}
+
     <h3>⏱ Total Watch Time</h3>
     <p>${hours}h ${minutes}m</p>
   `;
 
   resultDiv.classList.remove("hidden");
 }
+
 
 async function loadTrending() {
   const url = `${TMDB_BASE}/trending/tv/day?api_key=${TMDB_KEY}`;
