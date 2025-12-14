@@ -1,6 +1,6 @@
 // ===== API KEYS =====
 const TMDB_KEY = "24a398c27de171fa494d537cd2343141";
-const OMDB_KEY = "http://www.omdbapi.com/?i=tt3896198&apikey=37aba0ed";
+const OMDB_KEY = "37aba0ed";
 
 // ===== BASE URLS =====
 const TMDB_BASE = "https://api.themoviedb.org/3";
