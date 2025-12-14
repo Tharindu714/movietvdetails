@@ -250,3 +250,42 @@ body::after {
 .hidden {
   display: none;
 }
+
+/* 📱 Mobile Responsiveness Fix */
+@media (max-width: 768px) {
+
+  /* Search bar stack */
+  .search-box {
+    flex-direction: column;
+  }
+
+  .search-box button {
+    width: 100%;
+  }
+
+  /* Result hero card stack */
+  .result {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .result img {
+    width: 180px;
+  }
+
+  .result-details {
+    width: 100%;
+  }
+
+  .watch-time {
+    font-size: 2.4rem;
+  }
+
+  /* Ratings wrap nicely */
+  .ratings {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
