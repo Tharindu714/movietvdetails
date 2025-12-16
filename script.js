@@ -34,7 +34,7 @@ async function searchMedia(query) {
 
   // Pick best match
   const media = data.results.find(
-    item => item.media_type === "movie" || item.media_type === "tv"
+    (item) => item.media_type === "movie" || item.media_type === "tv"
   );
 
   if (!media) return;
@@ -63,9 +63,14 @@ async function fetchMovieDetails(id) {
     title: movie.title,
     year: movie.release_date?.split("-")[0],
     poster: IMG_BASE + movie.poster_path,
-    runtime: movie.runtime,
+    runtime:
+      movie.runtime && movie.runtime < 300
+        ? movie.runtime
+        : ratings.Runtime?.includes("min")
+        ? parseInt(ratings.Runtime)
+        : 0,
     imdb: ratings.imdbRating,
-    rt: ratings.Ratings?.find(r => r.Source === "Rotten Tomatoes")?.Value
+    rt: ratings.Ratings?.find((r) => r.Source === "Rotten Tomatoes")?.Value,
   });
 }
 
@@ -75,9 +80,18 @@ async function fetchTvDetails(id) {
   const tv = await res.json();
 
   let totalMinutes = 0;
-  const avgRuntime = tv.episode_run_time[0] || 45;
 
-  tv.seasons.forEach(season => {
+  // Safe average runtime
+  let avgRuntime = tv.episode_run_time?.[0] || 45;
+
+  // Clamp runtime (prevents crazy values)
+  if (avgRuntime < 20) avgRuntime = 25;
+  if (avgRuntime > 60) avgRuntime = 45;
+
+  tv.seasons.forEach((season) => {
+    // Ignore specials (Season 0)
+    if (season.season_number === 0) return;
+
     totalMinutes += season.episode_count * avgRuntime;
   });
 
@@ -89,10 +103,9 @@ async function fetchTvDetails(id) {
     runtime: totalMinutes,
     imdb: "N/A",
     rt: "N/A",
-    tmdbRating: tv.vote_average
+    tmdbRating: tv.vote_average,
   });
 }
-
 
 function displayResult(data) {
   const hours = Math.floor(data.runtime / 60);
@@ -120,7 +133,6 @@ function displayResult(data) {
   resultDiv.scrollIntoView({ behavior: "smooth" });
 }
 
-
 async function loadTrending() {
   const url = `${TMDB_BASE}/trending/tv/day?api_key=${TMDB_KEY}`;
   const res = await fetch(url);
@@ -128,7 +140,7 @@ async function loadTrending() {
 
   trendingList.innerHTML = "";
 
-  data.results.slice(0, 10).forEach(show => {
+  data.results.slice(0, 10).forEach((show) => {
     const img = document.createElement("img");
     img.src = IMG_BASE + show.poster_path;
     img.title = show.name;
