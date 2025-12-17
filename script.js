@@ -144,6 +144,22 @@ async function loadTrending() {
     const img = document.createElement("img");
     img.src = IMG_BASE + show.poster_path;
     img.title = show.name;
+    img.alt = show.name;
+    img.classList.add("trending-card");
+    img.style.cursor = "pointer";
+
+    // When user clicks a trending poster: update search input and show details
+    img.addEventListener("click", () => {
+      // UX: show the name in the search input
+      searchInput.value = show.name;
+
+      // Directly fetch TV details by TMDB id (faster and more accurate)
+      fetchTvDetails(show.id);
+
+      // Optional: smooth scroll to the result card after a small delay
+      setTimeout(() => resultDiv.scrollIntoView({ behavior: "smooth" }), 300);
+    });
+
     trendingList.appendChild(img);
   });
 }
